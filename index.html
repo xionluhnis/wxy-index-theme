@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+  <html class="lt-ie9 lt-ie8 lt-ie7" lang="en">
+  <![endif]-->
+  <!--[if IE 7]>
+    <html class="lt-ie9 lt-ie8" lang="en">
+    <![endif]-->
+    <!--[if IE 8]>
+      <html class="lt-ie9" lang="en">
+      <![endif]-->
+      <!--[if gt IE 8]>
+        <!-->
+        <html lang="en">
+        <!--<![endif]-->
+        
+        <head>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <title>{% if not(is_front_page) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
+          {% if meta.description %}
+          <meta name="description" content="{{ meta.description }}">
+          {% endif %} 
+          {% if meta.robots %}
+          <meta name="robots" content="{{ meta.robots }}">
+          {% endif %}
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="icon" href="{{ theme_url }}/favicon.ico" type="image/x-icon" />
+          <link rel="stylesheet" href="{{ theme_url }}/styles/pure-min.css">
+          <link rel="stylesheet" href="{{ theme_url }}/styles/main.css">
+          <link rel="stylesheet" href="{{ theme_url }}/styles/navigataur.css">
+          <link rel="stylesheet" href="{{ theme_url }}/styles/google-ptsans-400-700.css" type="text/css">
+          <script type="text/javascript" src="{{ theme_url }}/js/respond.min.js"></script>
+          {% set has_images=false %} 
+          {% for media in index if media.is_image %}
+          {% set has_images=true %} 
+          {% endfor %} 
+          {% if has_images %}
+          <script type="text/javascript" src="{{ theme_url }}/zigfy/js/jquery.js"></script>
+          <script type="text/javascript" src="{{ theme_url }}/zigfy/js/img.preload.js"></script>
+          <script type="text/javascript" src="{{ theme_url }}/zigfy/js/jquery.zigfy.js"></script>
+          <script type="text/javascript" src="{{ theme_url }}/zigfy/js/jquery.mousewheel.min.js"></script>
+          <link rel="stylesheet" href="{{ theme_url }}/zigfy/css/zigfy.css" type="text/css" media="all">
+          {% endif %}
+      </head>
+        <body class="gallery">
+          <div id="container" class="pure-g-r">
+            <div class="sidebar pure-u">
+            {% if not(current_page.url == base_url ~ '/') %}
+              <a href="{{ parent_url }}" class="previous">
+                  <!-- <img src="{{ theme_url }}/images/logo.png" alt="{{ site_title }}" />--></a>
+            {% endif %}
+              <div class="rotbox">
+                <a href="{{ current_page.url }}" class="current">{% if meta.title %}{{ meta.title }}{% else %}{{ meta.url }}{% endif %}</a>
+              </div>
+            </div>
+            <div class="pure-u-1">
+              <div id="content">
+                <!-- <div class="post">
+                  <h2><a href="{{ current_page.url }}">{{ current_page.title }}</a></h2>
+                  <p class="meta">Published {{ current_page.date_formatted }}</p>
+                  <p class="excerpt">{{ current_page.excerpt }}</p>                
+                </div>
+                -->
+                <div class="header">
+                  <div class="post">
+                    {% if is_logged %}
+                    {% if is_404 %}
+                    <a href="{{ base_url }}/admin/create?path={{ current_url }}" target="_blank" class="admin create">Create</a>
+                    {% else %}
+                    <a href="{{ base_url }}/admin/edit?path={{ current_page.url }}" target="_blank" class="admin edit">Edit</a>
+                    {% endif %}
+                    {% endif %} 
+                    {% if meta.title %}
+                     <h2>{{ meta.title }}</h2>
+                    {% endif %} 
+                    {% if meta.date %}
+                    <p class="meta">Published {{ meta.date_formatted }}</p>{% endif %}
+                    {% spaceless %}{{ content }}{%endspaceless %}
+                  </div>
+                </div>
+                <div class="medias">
+                  {% for media in index %}
+                    {% if media.type == 'image' %}
+                    <div class="section image {{ media.is_wide ? 'wide' : media.is_tall ? 'tall' : 'square' }}" title="{{ media.title }}">
+                      <img src="{{ media.url }}@80x80" title="{{ media.title }}" data-url="{{ media.url }}" />
+                    </div>
+                    {% else %}
+                    <a class="section {{ media.type }}" href="{{ media.url }}" title="{{ media.description }}">{{ media.title }}</a>
+                    {% endif %}
+                  {% endfor %}</div>
+                </div>
+            </div>
+        </div>
+        {% if has_images %}
+          <!-- full screen gallery -->
+          <div id="gallery" class="full" data-zigfy-resize="true" data-zigfy-layout="full" data-zigfy-align="center" data-zigfy-padding="50" data-zigfy-transition="none">
+            <div class="nav full"></div>
+            <div class="exit"></div>
+                {% for file in index if file.is_image %}
+                <img data-src="{{ file.url }}" width="{{ file.width }}" height="{{ file.height }}" data-full-src="{{ file.url }} data-full-width="{{ file.width }} " data-full-height="{{ file.height }} " />
+                {% endfor %}
+            </div>
+          <script type="text/javascript" src="{{ theme_url }}/gallery.js"></script>
+        {% endif %}
+    </body>
+</html>
+
