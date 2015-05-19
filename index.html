@@ -65,9 +65,9 @@
                   <div class="post">
                     {% if is_logged %}
                     {% if is_404 %}
-                    <a href="{{ base_url }}/admin/create?path={{ current_url }}" target="_blank" class="admin create">Create</a>
+                    <a href="{{ current_url }}?edit" target="_blank" class="admin create">Create</a>
                     {% else %}
-                    <a href="{{ base_url }}/admin/edit?path={{ current_page.url }}" target="_blank" class="admin edit">Edit</a>
+                    <a href="{{ current_url }}?edit" target="_blank" class="admin edit">Edit</a>
                     {% endif %}
                     {% endif %} 
                     {% if meta.title %}
