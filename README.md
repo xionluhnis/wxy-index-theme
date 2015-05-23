@@ -4,7 +4,7 @@ Theme for wxy to show galleries as a file index
 ![](index-screenshot.png)
 
 ## Dependencies
-Required:
+Included:
 
 * [Zigfy](https://github.com/xionluhnis/zigfy) for the gallery system and image preloader.
 
